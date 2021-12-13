@@ -1,0 +1,59 @@
+function main() {
+  // carrega a planilha que contem os aniversarios.
+  var sheet = SpreadsheetApp.getActive().getSheetByName("Página1");
+
+  // Obtenha a última linha da planilha que contém dados.
+  var numRows = sheet.getLastRow();
+
+  // Carrega dados nas primeiras duas colunas da segunda linha até a última linha. 
+  // Lembre-se: a primeira linha tem cabeçalhos de coluna, então não queremos carregá-la.
+  var range = sheet.getRange(2, 2, numRows - 1, 13).getValues();
+
+  // loop para processar cada linha de dados
+  // criado variável que armazenará os nomes dos aniversariantes do dia
+  var names = [];
+  for(var index in range) {
+    // Para cada linha, pegue o nome da pessoa e seu aniversário
+    var row = range[index];
+    var name = row[0];
+    var birthday = row[11];
+    
+    // Verifique se o aniversário da pessoa é hoje
+    if(isBirthdayToday(birthday)) {
+      
+       names.push(name);
+    }
+  }
+  //Envio de um lembrete por e-mail
+  emailReminder(names.join("\n"));
+}
+
+// Verifique se o aniversário de uma pessoa é hoje
+function isBirthdayToday(birthday) {
+  // Se o aniversário for uma string, converta-o em data
+  if(typeof birthday === "string")
+    birthday = new Date(birthday);
+  var today = new Date();
+  if((today.getDate() === birthday.getDate()) &&
+      (today.getMonth() === birthday.getMonth())) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// Função para enviar o lembrete por e-mail
+function emailReminder(name) {
+  var subject = "LEMBRETE DE ANIVERSÁRIO DE ASSOCIADO: ";
+  var recipient = "paivaseven@gmail.com";
+  var body = "Aniversariantes associados do dia:" +"\n\n"+ name;
+  GmailApp.sendEmail(recipient, subject, body);
+}
+
+function onOpen(){
+	var ui = SpreadsheetApp.getUi();
+	ui.createMenu("Código de aniversário")
+	.addItem("Rodar agora", "main")
+	.addToUi();
+
+}
