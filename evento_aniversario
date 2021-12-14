@@ -23,9 +23,10 @@ function main() {
       
        names.push(name);
     }
-  }
+  }if(names!=""){
   //Envio de um lembrete por e-mail
   emailReminder(names.join("\n"));
+  }
 }
 
 // Verifique se o aniversário de uma pessoa é hoje
