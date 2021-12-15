@@ -46,7 +46,7 @@ function isBirthdayToday(birthday) {
 // Função para enviar o lembrete por e-mail
 function emailReminder(name) {
   var subject = "LEMBRETE DE ANIVERSÁRIO DE ASSOCIADO: ";
-  var recipient = "paivaseven@gmail.com";
+  var recipient = "relacionamento@consultoriahealthcare.com";
   var body = "Aniversariantes associados do dia:" +"\n\n"+ name;
   GmailApp.sendEmail(recipient, subject, body);
 }
