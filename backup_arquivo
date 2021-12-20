@@ -3,9 +3,24 @@ function salvarCopia() {
   
   var planilha = SpreadsheetApp.getActiveSpreadsheet();
   
-  var pastaDestino = DriveApp.getFolderById("inserir url-chave da pasta do Google Driver aqui");
+  var pastaDestino = DriveApp.getFolderById("Inserir ID da pasta do google driver");
+  var files = pastaDestino.getFiles();
+  
+  var d = new Date();
+  var year = d.getFullYear();
+  var month = d.getMonth();
+  var day = d.getDate();
+  console.log(day);
+  var ontem = new Date(year, month, day-1)
 
   var data = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "dd/MM/yyyy hh:mm:ss a");
 
   DriveApp.getFileById(planilha.getId()).makeCopy("Cópia "+ data,pastaDestino);
+
+   while (files.hasNext()) {
+    var file = files.next();
+    if (file.getLastUpdated() < ontem) {
+      Drive.Files.trash(file.getId());
+    }
+  }
 }
