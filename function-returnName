@@ -1,0 +1,15 @@
+//Salva todos os nomes de abas de um Google Sheet num array
+function abaDinamica() {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheets = ss.getSheets();
+     var allSheetsName = [];
+     
+     for (var i = 0; i < sheets.length; i++) {
+        var sheet = ss.getSheetByName(sheets[i].getName()).getName();
+        a.push(sheet);
+  }
+  //todos os dados da primeira aba
+  Logger.Log(allSheetsName[0].getDataRange().getValues)
+  
+  return allSheetsName;
+}
